@@ -1,0 +1,6 @@
+{
+  "target": 0.80,
+  "k": 8,
+  "coverage": 0.80,
+  "description": "Top 8 vulnerabilities cover 80% of total risk exposure"
+}

@@ -1,0 +1,75 @@
+Entrada: duas linhas CSV (primeira = header, segunda = valores). Tarefa: 1. Parseie automaticamente o header e a linha. 2. Gere um resumo executivo (máx. 60 palavras) para CEO contendo: - Nome/id da vulnerabilidade (title + cve_id). - RPI total (rpi_score). - Severidade (severity). - Impacto resumido (q3_impact) em termos de negócio. - Urgência (sla_days_remaining, q5_urgency). - Ação recomendada (mitigation). 3. Use linguagem simples, sem termos técnicos. 4. No final, inclua: (RPI={rpi_score}, Prioridade={severity}). Saída: apenas o resumo em texto. Entrada: duas linhas CSV (header + linha). rank,cve_id,title,component,version,rpi_score,q1_exploitability,q2_exposure,q3_impact,q4_fixability,q5_urgency,domain,has_kev,has_poc,epss_score,sla_days_remaining,severity,product,mitigation 1,CVE-2012-0391,org.apache.struts:struts-tiles:1.3.8 | CVE-2012-0391,org.apache.struts:struts-tiles,1.3.8,100.0,100.0,60.55,100.0,100,100.0,web_api,True,True,0.90887,-125.0,Critical,PROJETOXYZ,Update org.apache.struts:struts-tiles:1.3.8 to at least the version recommended in the description
+
+RESULTADO:
+
+A vulnerabilidade org.apache.struts:struts-tiles:1.3.8 | CVE-2012-0391 apresenta risco máximo (RPI 100) e severidade Critical. O impacto é total para o negócio, podendo comprometer operações críticas. O prazo de correção já venceu (-125 dias), com urgência máxima. Recomendamos atualizar imediatamente o componente para versão segura. (RPI=100.0, Prioridade=Critical)
+
+Entrada: duas linhas CSV (header + linha). Tarefa: 1. Parseie automaticamente o header e a linha. 2. Gere um relatório técnico com seções: - Identificação: title, cve_id, component, version, product. - Score: rpi_score e métricas Q1..Q5. - Exploitabilidade: q1_exploitability, has_poc, has_kev, epss_score. - Exposição: q2_exposure e domain. - Impacto: q3_impact e severity. - Urgência: q5_urgency e sla_days_remaining. - Mitigação: mitigation. 3. Explique de forma técnica como esses fatores justificam a pontuação final. 4. Limite: 350–500 palavras. Saída: relatório técnico detalhado. Entrada: duas linhas CSV (header + linha). rank,cve_id,title,component,version,rpi_score,q1_exploitability,q2_exposure,q3_impact,q4_fixability,q5_urgency,domain,has_kev,has_poc,epss_score,sla_days_remaining,severity,product,mitigation 1,CVE-2012-0391,org.apache.struts:struts-tiles:1.3.8 | CVE-2012-0391,org.apache.struts:struts-tiles,1.3.8,100.0,100.0,60.55,100.0,100,100.0,web_api,True,True,0.90887,-125.0,Critical,PROJETOXYZ,Update org.apache.struts:struts-tiles:1.3.8 to at least the version recommended in the description
+
+Relatório Técnico de Vulnerabilidade
+
+---
+
+1. Identificação
+- Título: org.apache.struts:struts-tiles:1.3.8 | CVE-2012-0391
+- CVE ID: CVE-2012-0391
+- Componente: org.apache.struts:struts-tiles
+- Versão: 1.3.8
+- Produto: PROJETOXYZ
+
+---
+
+2. Score
+- RPI Score: 100.0
+- Q1 – Exploitability: 100.0
+- Q2 – Exposure: 60.55
+- Q3 – Impact: 100.0
+- Q4 – Fixability: 100.0
+- Q5 – Urgency: 100.0
+
+O RPI máximo (100.0) demonstra risco crítico, resultante da combinação de alta exploitabilidade, impacto severo e urgência máxima.
+
+---
+
+3. Exploitabilidade
+A métrica Q1 apresenta exploitabilidade de 100.0, o que significa facilidade extrema de exploração. Além disso, há prova de conceito disponível (has_poc = True) e a vulnerabilidade consta na lista de KEV (has_kev = True), evidenciando exploração ativa. O EPSS score de 0.90887 (~91%) indica probabilidade muito elevada de ataque em ambiente real. Esses fatores elevam significativamente a ameaça, justificando o peso atribuído ao RPI.
+
+---
+
+4. Exposição
+O Q2 Exposure é 60.55, representando exposição considerável, ainda que não máxima. O domínio impactado é web_api, tipicamente acessível a clientes externos e, portanto, exposto a vetores de ataque vindos da internet. Esse cenário amplia a superfície de ataque e reforça a criticidade da vulnerabilidade.
+
+---
+
+5. Impacto
+O Q3 Impact é 100.0, atribuindo gravidade total ao comprometimento. A severidade global é classificada como Critical, implicando que uma exploração bem-sucedida pode resultar em perda de confidencialidade, integridade e disponibilidade de sistemas essenciais. No contexto do PROJETOXYZ, isso significa risco direto de interrupção de serviços críticos, exposição de dados sensíveis e potencial comprometimento da infraestrutura.
+
+---
+
+6. Urgência
+A métrica Q5 Urgency é 100.0, reforçando necessidade de resposta imediata. O campo SLA Days Remaining está em -125, indicando que o prazo de correção expirou há mais de quatro meses. Esse atraso agrava o risco operacional e pode gerar não conformidade em auditorias e regulatórios, além de aumentar a probabilidade de ataques bem-sucedidos em função da exploração ativa já confirmada.
+
+---
+
+7. Mitigação
+A medida recomendada é atualizar o componente org.apache.struts:struts-tiles:1.3.8 para uma versão segura, conforme descrito na documentação oficial do CVE. A correção é tecnicamente viável (Q4 Fixability = 100.0), não apresentando obstáculos significativos para execução imediata.
+
+---
+
+8. Justificativa Técnica do Score
+O score final de RPI = 100.0 decorre da convergência de múltiplos fatores críticos:
+- Exploitabilidade máxima, com PoC público, KEV ativo e probabilidade elevada de ataque (EPSS > 0.9).
+- Impacto máximo, com severidade Critical, indicando comprometimento total de operações em caso de exploração.
+- Exposição relevante em domínio web_api, ampliando risco de ataques externos.
+- Urgência máxima, reforçada pelo SLA amplamente vencido.
+- Facilidade de correção, que elimina barreiras técnicas para mitigação.
+
+Esses fatores se combinam de forma a justificar o RPI no valor máximo. A vulnerabilidade representa risco crítico de exploração ativa e impacto severo nos negócios, exigindo correção imediata.
+
+---
+
+Entrada: duas linhas CSV (primeira = header, segunda = valores). Tarefa: 1. Parseie automaticamente o header e a linha. 2. Gere um relatório executivo focado em produto (máx. 80 palavras) para Product Manager contendo: - Nome/id da vulnerabilidade (title + cve_id). - RPI total (rpi_score). - Severidade (severity). - Impacto no produto (q3_impact) em termos de funcionalidades e usuário. - Urgência (sla_days_remaining, q5_urgency). - Ação recomendada (mitigation). 3. Use linguagem focada em produto, roadmap e experiência do usuário. 4. No final, inclua: (RPI={rpi_score}, Prioridade={severity}). Saída: apenas o relatório em texto. Entrada: duas linhas CSV (header + linha). rank,cve_id,title,component,version,rpi_score,q1_exploitability,q2_exposure,q3_impact,q4_fixability,q5_urgency,domain,has_kev,has_poc,epss_score,sla_days_remaining,severity,product,mitigation 1,CVE-2012-0391,org.apache.struts:struts-tiles:1.3.8 | CVE-2012-0391,org.apache.struts:struts-tiles,1.3.8,100.0,100.0,60.55,100.0,100,100.0,web_api,True,True,0.90887,-125.0,Critical,PROJETOXYZ,Update org.apache.struts:struts-tiles:1.3.8 to at least the version recommended in the description
+
+RESULTADO:
+
+A vulnerabilidade org.apache.struts:struts-tiles:1.3.8 | CVE-2012-0391 impacta diretamente o PROJETOXYZ com RPI 100 e severidade Critical. Pode comprometer funcionalidades web e experiência do usuário. O prazo de correção expirou (-125 dias), exigindo ação imediata para manter a confiabilidade do produto. Recomendamos atualizar o componente para versão segura, priorizando no roadmap de segurança. (RPI=100.0, Prioridade=Critical)

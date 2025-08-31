@@ -1,0 +1,31 @@
+{
+  "buckets": ["SLA Violado", "KEV Ativo", "PoC Disponível", "EPSS 90+", "Alta Superfície", "Outros"],
+  "groups": [
+    {
+      "size": 3,
+      "criteria": "SLA>KEV>EPSSp>occ",
+      "topsisAvg": 0.89,
+      "description": "SLA violado com exploração ativa confirmada"
+    },
+    {
+      "size": 4,
+      "criteria": "KEV>PoC>EPSS>impact",
+      "topsisAvg": 0.82,
+      "description": "KEV ativo com PoCs públicos disponíveis"
+    },
+    {
+      "size": 2,
+      "criteria": "SLA>PoC>EPSSp>impact",
+      "topsisAvg": 0.76,
+      "description": "SLA crítico com evidência de exploração"
+    },
+    {
+      "size": 1,
+      "criteria": "exposure>occ>PoC>impact",
+      "topsisAvg": 0.58,
+      "description": "Alta exposição sem exploração ativa"
+    }
+  ],
+  "totalTies": 10,
+  "averageBucketSize": 2.5
+}

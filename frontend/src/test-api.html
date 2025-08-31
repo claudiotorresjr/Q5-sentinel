@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test API Connection</title>
+</head>
+<body>
+    <h1>Testing API Connection</h1>
+    <div id="results"></div>
+
+    <script>
+        const results = document.getElementById('results');
+
+        async function testAPI() {
+            try {
+                results.innerHTML += '<p>Testing hero counters...</p>';
+                const heroResponse = await fetch('http://localhost:5000/api/hero-counters');
+                const heroData = await heroResponse.json();
+                results.innerHTML += `<p>Hero counters: ${JSON.stringify(heroData)}</p>`;
+
+                results.innerHTML += '<p>Testing priorities...</p>';
+                const prioResponse = await fetch('http://localhost:5000/api/priorities?limit=2');
+                const prioData = await prioResponse.json();
+                results.innerHTML += `<p>Priorities count: ${prioData.length}</p>`;
+                results.innerHTML += `<p>First vulnerability: ${JSON.stringify(prioData[0])}</p>`;
+
+            } catch (error) {
+                results.innerHTML += `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+
+        testAPI();
+    </script>
+</body>
+</html>
