@@ -79,7 +79,7 @@ const Index = () => {
                 <img
                   src={logoSrc}
                   alt="Q5 Sentinel Logo"
-                  className="h-72 w-72 drop-shadow-sm"
+                  className="h-24 w-24 drop-shadow-sm"
                 />
                 <div>
                   <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">

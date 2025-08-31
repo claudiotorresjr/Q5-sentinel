@@ -9,7 +9,7 @@ import { Vuln, Filters, HeroCounterData } from '@/types';
 /**
  * Simulates network latency for realistic UX testing
  */
-const simulateLatency = (ms: number = 500) => 
+const simulateLatency = (ms: number = 500) =>
   new Promise(resolve => setTimeout(resolve, ms));
 
 /**
@@ -18,7 +18,7 @@ const simulateLatency = (ms: number = 500) =>
 const fetchPriorities = async (filters: Filters & { page?: number }): Promise<{data: Vuln[], pagination: any}> => {
   // Build query parameters
   const params = new URLSearchParams();
-  
+
   if (filters.search) params.append('search', filters.search);
   if (filters.has_kev !== undefined) params.append('has_kev', filters.has_kev.toString());
   if (filters.has_poc !== undefined) params.append('has_poc', filters.has_poc.toString());
@@ -26,15 +26,15 @@ const fetchPriorities = async (filters: Filters & { page?: number }): Promise<{d
   if (filters.severities && filters.severities.length === 1) params.append('severity', filters.severities[0]);
   if (filters.rpi_min !== undefined) params.append('rpi_min', filters.rpi_min.toString());
   if (filters.rpi_max !== undefined) params.append('rpi_max', filters.rpi_max.toString());
-  
+
   // Pagination
   params.append('page', (filters.page || 1).toString());
   params.append('limit', '100');
-  
-  const apiUrl = `http://localhost:5000/api/priorities?${params.toString()}`;
-  
+
+  const apiUrl = `http://localhost:5050/api/priorities?${params.toString()}`;
+
   console.log('Fetching from:', apiUrl);
-  
+
   try {
     const response = await fetch(apiUrl);
     console.log('Response status:', response.status);
@@ -81,7 +81,7 @@ export const usePriorities = (filters: Filters & { page?: number }) => {
 const fetchHeroCounters = async (): Promise<HeroCounterData> => {
   console.log('Fetching hero counters...');
   try {
-    const response = await fetch('http://localhost:5000/api/hero-counters');
+    const response = await fetch('http://localhost:5050/api/hero-counters');
     console.log('Hero counters response status:', response.status);
     if (!response.ok) {
       throw new Error(`Failed to fetch hero counters: ${response.status} ${response.statusText}`);

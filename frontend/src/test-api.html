@@ -13,12 +13,12 @@
         async function testAPI() {
             try {
                 results.innerHTML += '<p>Testing hero counters...</p>';
-                const heroResponse = await fetch('http://localhost:5000/api/hero-counters');
+                const heroResponse = await fetch('http://localhost:5050/api/hero-counters');
                 const heroData = await heroResponse.json();
                 results.innerHTML += `<p>Hero counters: ${JSON.stringify(heroData)}</p>`;
 
                 results.innerHTML += '<p>Testing priorities...</p>';
-                const prioResponse = await fetch('http://localhost:5000/api/priorities?limit=2');
+                const prioResponse = await fetch('http://localhost:5050/api/priorities?limit=2');
                 const prioData = await prioResponse.json();
                 results.innerHTML += `<p>Priorities count: ${prioData.length}</p>`;
                 results.innerHTML += `<p>First vulnerability: ${JSON.stringify(prioData[0])}</p>`;

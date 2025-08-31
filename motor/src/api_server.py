@@ -21,7 +21,7 @@ def convert_csv_to_json_format(df: pd.DataFrame) -> List[Dict[str, Any]]:
     Converte DataFrame do CSV para formato JSON esperado pelo front-end
     """
     json_data = []
-    
+
     for index, row in df.iterrows():
         # Mapeamento de campos do CSV para JSON
         vulnerability = {
@@ -61,9 +61,9 @@ def convert_csv_to_json_format(df: pd.DataFrame) -> List[Dict[str, Any]]:
             "tie_breaker_key": "SLA>KEV>EPSSp>occ",  # Valor padrão
             "reason_text": f"RPI Score: {row.get('rpi_score', 0)}. Domain: {row.get('domain', 'N/A')}."
         }
-        
+
         json_data.append(vulnerability)
-    
+
     return json_data
 
 @app.route('/api/priorities', methods=['GET'])
@@ -75,9 +75,9 @@ def get_priorities():
         # Lê o CSV
         if not os.path.exists(CSV_PATH):
             return jsonify({"error": "CSV file not found"}), 404
-        
+
         df = pd.read_csv(CSV_PATH)
-        
+
         # Aplica filtros se fornecidos
         search = request.args.get('search', '').lower()
         if search:
@@ -88,53 +88,53 @@ def get_priorities():
                 df['domain'].str.lower().str.contains(search, na=False)
             )
             df = df[mask]
-        
+
         # Filtro KEV
         has_kev = request.args.get('has_kev')
         if has_kev is not None:
             kev_filter = has_kev.lower() == 'true'
             df = df[df['has_kev'].astype(str).str.lower() == str(kev_filter).lower()]
-        
+
         # Filtro PoC
         has_poc = request.args.get('has_poc')
         if has_poc is not None:
             poc_filter = has_poc.lower() == 'true'
             df = df[df['has_poc'].astype(str).str.lower() == str(poc_filter).lower()]
-        
+
         # Filtro domínio
         domain = request.args.get('domain')
         if domain:
             df = df[df['domain'] == domain]
-        
+
         # Filtro severidade
         severity = request.args.get('severity')
         if severity:
             df = df[df['severity'].str.lower() == severity.lower()]
-        
+
         # Filtro RPI mínimo
         rpi_min = request.args.get('rpi_min')
         if rpi_min:
             df = df[pd.to_numeric(df['rpi_score'], errors='coerce') >= float(rpi_min)]
-        
+
         # Filtro RPI máximo
         rpi_max = request.args.get('rpi_max')
         if rpi_max:
             df = df[pd.to_numeric(df['rpi_score'], errors='coerce') <= float(rpi_max)]
-        
+
         # Paginação
         page = int(request.args.get('page', 1))
         limit = int(request.args.get('limit', 100))  # Padrão 100 por página
         offset = (page - 1) * limit
-        
+
         total_count = len(df)
         df = df.iloc[offset:offset + limit]
-        
+
         # Substitui NaN por None antes da conversão
         df = df.fillna('')
-        
-        # Converte para formato JSON 
+
+        # Converte para formato JSON
         json_data = convert_csv_to_json_format(df)
-        
+
         # Retorna dados com informações de paginação
         response_data = {
             "data": json_data,
@@ -147,9 +147,9 @@ def get_priorities():
                 "has_prev": page > 1
             }
         }
-        
+
         return jsonify(response_data)
-        
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -161,21 +161,21 @@ def get_hero_counters():
     try:
         if not os.path.exists(CSV_PATH):
             return jsonify({"error": "CSV file not found"}), 404
-        
+
         df = pd.read_csv(CSV_PATH)
-        
+
         counters = {
             "sla_violated": len(df[pd.to_numeric(df['sla_days_remaining'], errors='coerce') < 0]),
-            "sla_warning": len(df[(pd.to_numeric(df['sla_days_remaining'], errors='coerce') >= 0) & 
+            "sla_warning": len(df[(pd.to_numeric(df['sla_days_remaining'], errors='coerce') >= 0) &
                                  (pd.to_numeric(df['sla_days_remaining'], errors='coerce') <= 7)]),
             "kev_count": len(df[df['has_kev'].astype(str).str.lower() == 'true']),
             "poc_count": len(df[df['has_poc'].astype(str).str.lower() == 'true']),
             "epss_high": len(df[pd.to_numeric(df['epss_score'], errors='coerce') >= 0.9]),
             "total_count": len(df)
         }
-        
+
         return jsonify(counters)
-        
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -187,9 +187,9 @@ def get_stats():
     try:
         if not os.path.exists(CSV_PATH):
             return jsonify({"error": "CSV file not found"}), 404
-        
+
         df = pd.read_csv(CSV_PATH)
-        
+
         stats = {
             "total_vulnerabilities": len(df),
             "domains": df['domain'].value_counts().to_dict(),
@@ -197,9 +197,9 @@ def get_stats():
             "avg_rpi_score": float(df['rpi_score'].mean()) if pd.notna(df['rpi_score'].mean()) else 0,
             "top_rpi_score": float(df['rpi_score'].max()) if pd.notna(df['rpi_score'].max()) else 0
         }
-        
+
         return jsonify(stats)
-        
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -213,11 +213,11 @@ def test():
 if __name__ == '__main__':
     print(f"🚀 Starting API server...")
     print(f"📁 CSV path: {CSV_PATH}")
-    print(f"✅ Server ready at http://localhost:5000")
+    print(f"✅ Server ready at http://localhost:5050")
     print(f"🔗 Endpoints:")
     print(f"   GET /api/priorities - Vulnerability data")
     print(f"   GET /api/hero-counters - Hero counter data")
     print(f"   GET /api/stats - General statistics")
     print(f"   GET /test - Test endpoint")
-    
-    app.run(debug=True, host='0.0.0.0', port=5000)
+
+    app.run(debug=True, host='0.0.0.0', port=5050)
