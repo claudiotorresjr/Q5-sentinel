@@ -1,4 +1,5 @@
 # Q5-sentinel
+## Desenvolvido para o Hachathon RNP 2025
 
 ### Frontend
 
@@ -11,6 +12,8 @@ Acessar: `http://localhost:8080`
 
 # Motor
 
+Usar python3
+
 ```bash
 cd motor
 python src/main.py --inputs src/data/CPBR_produto2.json
@@ -22,6 +25,6 @@ Iniciar o servidor
 
 
 ```bash
-cd frontend && npm install
-npm run dev
+cd motor
+python src/api_server.py
 ```
