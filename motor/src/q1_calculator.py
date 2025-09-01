@@ -21,7 +21,7 @@ from datetime import datetime
 logger = logging.getLogger(__name__)
 
 GITHUB_TOKEN = ""  # optional
-NVD_API_KEY = "efc79c93-f3c9-4c5d-8810-1ae74341c05b"
+NVD_API_KEY = ""
 
 # --- CVE normalization helpers ------------------------------------------------
 
