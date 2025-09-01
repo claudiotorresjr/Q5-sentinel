@@ -16,13 +16,15 @@ Usar python3
 
 ```bash
 cd motor
+conda create -n q5-sentinel python=3.11 -y
+conda activate q5-sentinel
 
-pip install -r requirements.txt
+conda install -c conda-forge flask=2.3.3 flask-cors=4.0.0 \
+    pandas=2.1.3 numpy=1.25.2 requests=2.31.0 tqdm=4.66.1 -y
 
-# 1 json
-python src/main.py --inputs src/data/CPBR_produto2.json
-# ou varios json
-python src/main.py --inputs src/data/CPBR_produto1.json src/data/CPBR_produto2.json src/data/CPBR_produto3.json
+# PyTorch with CPU only
+conda install -c pytorch pytorch=2.1.0 cpuonly -y
+
 ```
 
 Iniciar o servidor
